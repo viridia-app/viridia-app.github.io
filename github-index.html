@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viridia — Herbalist in your pocket</title>
+<meta name="description" content="A natural remedy library built on demonstrable historical efficacy. Herbs, nutrients, minerals, compounds, and modalities — researched, cited, and flagged where it matters.">
+<meta property="og:title" content="Viridia — Herbalist in your pocket">
+<meta property="og:description" content="A natural remedy library. No pharmaceutical framing. No wellness branding. Just the remedies.">
+<meta property="og:image" content="App-Store-Screenshot-1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+Unicase:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ── Tokens ── */
+:root {
+  --bg:       #1a1610;
+  --cream:    #F4EEE2;
+  --gold:     #C6A664;
+  --gold-dim: rgba(198,166,100,0.45);
+  --muted:    #7a6a52;
+  --dimmer:   #4a3e2c;
+  --faintest: rgba(198,166,100,0.08);
+  --rule:     rgba(198,166,100,0.12);
+}
+
+/* ── Base ── */
+body {
+  background: var(--bg);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+section { width: 100%; position: relative; overflow: hidden; }
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Fade-in observer ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.fade-in.visible { opacity: 1; transform: none; }
+.fade-in.d1 { transition-delay: 0.12s; }
+.fade-in.d2 { transition-delay: 0.24s; }
+.fade-in.d3 { transition-delay: 0.36s; }
+.fade-in.d4 { transition-delay: 0.48s; }
+.fade-in.d5 { transition-delay: 0.60s; }
+
+/* ── Ornament row ── */
+.orn-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.orn-l { flex: 1; min-width: 120px; height: 0.5px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
+.orn-r { flex: 1; min-width: 120px; height: 0.5px; background: linear-gradient(to left, transparent, var(--gold-dim)); }
+.orn-g { font-size: 11px; color: var(--gold); opacity: 0.65; flex-shrink: 0; }
+
+/* ── Eyebrow ── */
+.eyebrow {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(10px, 1.6vw, 13px);
+  letter-spacing: 0.28em;
+  color: #8a7a62;
+  text-transform: uppercase;
+  display: block;
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero {
+  min-height: 100svh;
+  display: table;
+  width: 100%;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(198,166,100,0.055) 0%, transparent 62%),
+    repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(198,166,100,0.008) 80px),
+    repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(198,166,100,0.008) 80px);
+}
+
+.hero-inner {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 90px 32px 60px;
+}
+
+.hero-wordmark {
+  width: clamp(200px, 60vw, 420px);
+  height: auto;
+  margin-bottom: 28px;
+}
+
+.hero-wordmark-text {
+  display: none;
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(62px, 14vw, 120px);
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.14em;
+  line-height: 1;
+  margin-bottom: 28px;
+}
+
+.hero-orn {
+  display: table;
+  width: clamp(280px, 70vw, 600px);
+  margin: 4px auto 14px;
+}
+.hero-orn-l, .hero-orn-r {
+  display: table-cell;
+  width: 50%;
+  vertical-align: middle;
+}
+.hero-orn-l span {
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+.hero-orn-r span {
+  display: block;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--gold-dim));
+}
+.hero-orn-g {
+  display: table-cell;
+  white-space: nowrap;
+  padding: 0 14px;
+  font-size: 11px;
+  color: var(--gold);
+  opacity: 0.65;
+  vertical-align: middle;
+}
+
+.hero-tagline {
+  font-size: clamp(20px, 4.5vw, 40px);
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1.25;
+  margin-bottom: 22px;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 2.5vw, 22px);
+  color: var(--muted);
+  line-height: 1.9;
+  max-width: 560px;
+  margin: 0 auto 52px;
+}
+
+/* ── Store badge pair ── */
+.badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 52px;
+}
+
+.badge-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream);
+  color: var(--bg);
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 4px;
+  transition: opacity 0.2s ease, transform 0.18s ease;
+  min-width: 168px;
+}
+.badge-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+.badge-btn:active { transform: translateY(0); }
+
+.badge-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  fill: var(--bg);
+}
+
+.badge-text { display: flex; flex-direction: column; line-height: 1.15; }
+.badge-get {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #3a3020;
+}
+.badge-store {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bg);
+  letter-spacing: 0.02em;
+}
+
+.hero-arrow {
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--gold);
+  opacity: 0.35;
+  animation: bob 2.2s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(7px); }
+}
+
+/* ══════════════════════════════════════
+   SCREENSHOTS — the main event
+══════════════════════════════════════ */
+#screenshots {
+  padding: 80px 0 0;
+  border-top: 0.5px solid var(--rule);
+}
+
+.screenshots-header {
+  text-align: center;
+  padding: 0 32px;
+  margin-bottom: 56px;
+}
+.screenshots-header .eyebrow { margin-bottom: 18px; }
+.screenshots-heading {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(26px, 5.5vw, 48px);
+  font-weight: 500;
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 14px;
+  letter-spacing: 0.04em;
+}
+.screenshots-sub {
+  font-size: clamp(15px, 2.4vw, 21px);
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* Horizontal scroll strip — shows 2.4 screenshots on mobile so user knows to scroll */
+.screen-scroll-track {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 32px 56px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 92%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 5%, black 92%, transparent 100%);
+  display: flex;
+  justify-content: center;
+}
+.screen-scroll-track::-webkit-scrollbar { display: none; }
+
+.screen-strip {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  align-items: flex-end;
+  margin: 0 auto;
+}
+
+.screen-item {
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* First screenshot is the "hero" — slightly taller / center */
+.screen-item--hero {
+  transform: translateY(-18px);
+}
+
+.screen-item img {
+  display: block;
+  height: clamp(380px, 52vw, 560px);
+  width: auto;
+  border-radius: 20px;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.6),
+    0 0 0 0.5px rgba(198,166,100,0.15);
+}
+
+.screen-item--hero img {
+  height: clamp(420px, 58vw, 620px);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(198,166,100,0.22);
+}
+
+/* ── X banner repurposed as botanical divider ── */
+.botanical-banner {
+  width: 100%;
+  overflow: hidden;
+  height: 120px;
+  position: relative;
+  margin: 0;
+}
+.botanical-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.55;
+  filter: sepia(0.3) brightness(0.7);
+  display: block;
+}
+/* gold overlay fade in/out so it blends with sections */
+.botanical-banner::before,
+.botanical-banner::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  pointer-events: none;
+  z-index: 2;
+}
+.botanical-banner::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+.botanical-banner::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+/* ══════════════════════════════════════
+   PITCH — what it is / isn't
+══════════════════════════════════════ */
+#pitch {
+  padding: 100px 32px 90px;
+  border-top: 0.5px solid var(--rule);
+}
+
+#pitch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(198,166,100,0.03) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.pitch-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.pitch-header .eyebrow { margin-bottom: 18px; }
+
+.pitch-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 60px;
+  position: relative;
+  margin-bottom: 80px;
+  align-items: start;
+}
+
+/* vertical rule between columns */
+.pitch-columns::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 0.5px;
+  background: linear-gradient(to bottom, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+}
+
+.pitch-col-label {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(10px, 1.6vw, 13px);
+  letter-spacing: 0.26em;
+  color: #8a7a62;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.pitch-rule {
+  width: 32px;
+  height: 0.5px;
+  background: var(--gold-dim);
+  margin-bottom: 18px;
+}
+
+.pitch-heading {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 500;
+  color: #e8deca;
+  line-height: 1.3;
+  margin-bottom: 18px;
+  letter-spacing: 0.02em;
+}
+
+.pitch-body {
+  font-size: clamp(15px, 2.2vw, 19px);
+  color: var(--muted);
+  line-height: 1.85;
+}
+.pitch-body em { color: #6b5e4a; font-style: italic; }
+
+.pitch-footer {
+  text-align: center;
+  font-size: clamp(17px, 2.8vw, 26px);
+  font-style: italic;
+  color: var(--dimmer);
+  line-height: 1.75;
+  padding-top: 60px;
+  border-top: 0.5px solid var(--rule);
+}
+.pitch-footer em { color: var(--muted); }
+
+@media (max-width: 620px) {
+  .pitch-columns {
+    grid-template-columns: 1fr;
+    gap: 52px 0;
+  }
+  .pitch-columns::before { display: none; }
+  .pitch-col:first-child {
+    padding-bottom: 52px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+}
+
+/* ══════════════════════════════════════
+   FEATURES LIST
+══════════════════════════════════════ */
+#features {
+  padding: 90px 32px;
+  border-top: 0.5px solid var(--rule);
+}
+
+#features::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(198,166,100,0.025) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.features-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 60px;
+  width: 100%;
+}
+.features-header .eyebrow { margin-bottom: 18px; }
+.features-heading {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(22px, 4.5vw, 38px);
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 52px;
+  position: relative;
+  z-index: 1;
+}
+
+.features-grid .features-header {
+  grid-column: 1 / -1;
+}
+
+.feature-item {}
+
+.feature-glyph {
+  font-size: 11px;
+  color: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.feature-title {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(14px, 2.2vw, 18px);
+  font-weight: 500;
+  color: #e8deca;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.feature-desc {
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+@media (max-width: 560px) {
+  .features-grid { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* ══════════════════════════════════════
+   CONVICTION BAR
+══════════════════════════════════════ */
+#conviction {
+  padding: 100px 32px 110px;
+  border-top: 0.5px solid var(--rule);
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 55%, rgba(198,166,100,0.05) 0%, transparent 58%);
+}
+
+.conviction-headline {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(38px, 9vw, 84px);
+  font-weight: 500;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  margin-bottom: 36px;
+}
+.conviction-cross { color: var(--gold); }
+
+.conviction-sub {
+  font-size: clamp(16px, 2.8vw, 24px);
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 560px;
+  margin: 0 auto 60px;
+}
+
+/* second badge row */
+.badge-row--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* pricing note */
+.pricing-note {
+  margin-top: 28px;
+  font-size: clamp(13px, 1.8vw, 16px);
+  color: #8a7a62;
+  font-style: italic;
+}
+
+/* Apple badge state */
+.badge-btn--muted {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+  background: #c8baa0;
+}
+
+.conviction-orn {
+  display: table;
+  width: clamp(280px, 70vw, 600px);
+  margin: 0 auto 48px;
+}
+.conviction-orn-l, .conviction-orn-r {
+  display: table-cell;
+  width: 50%;
+  vertical-align: middle;
+}
+.conviction-orn-l span {
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+.conviction-orn-r span {
+  display: block;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--gold-dim));
+}
+.conviction-orn-g {
+  display: table-cell;
+  white-space: nowrap;
+  padding: 0 14px;
+  font-size: 11px;
+  color: var(--gold);
+  opacity: 0.65;
+  vertical-align: middle;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  padding: 36px 32px;
+  border-top: 0.5px solid rgba(198,166,100,0.07);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.footer-cross {
+  width: 100%;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: rgba(198,166,100,0.12);
+  letter-spacing: 0.1em;
+}
+
+.footer-link {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(10px, 1.6vw, 12px);
+  letter-spacing: 0.2em;
+  color: #3a3020;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--gold); }
+.footer-sep { color: #2a2210; font-size: 9px; }
+
+/* ══════════════════════════════════════
+   BETA MODAL
+══════════════════════════════════════ */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,8,5,0.82);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-backdrop.open { display: flex; }
+
+.modal {
+  background: #211d14;
+  border: 0.5px solid rgba(198,166,100,0.22);
+  border-radius: 6px;
+  padding: 48px 40px 40px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+.modal-close:hover { color: var(--cream); }
+
+.modal-orn {
+  display: table;
+  width: clamp(200px, 60%, 340px);
+  margin: 0 auto 24px;
+}
+.modal-orn-l, .modal-orn-r {
+  display: table-cell;
+  width: 50%;
+  vertical-align: middle;
+}
+.modal-orn-l span { display: block; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim)); }
+.modal-orn-r span { display: block; height: 1px; background: linear-gradient(to left, transparent, var(--gold-dim)); }
+.modal-orn-g {
+  display: table-cell;
+  white-space: nowrap;
+  padding: 0 14px;
+  font-size: 11px;
+  color: var(--gold);
+  opacity: 0.65;
+  vertical-align: middle;
+}
+
+.modal-title {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.modal-sub {
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.modal-field {
+  margin-bottom: 14px;
+  text-align: left;
+}
+.modal-field label {
+  display: block;
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: #6a5c44;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.modal-field input,
+.modal-field textarea {
+  width: 100%;
+  background: rgba(198,166,100,0.05);
+  border: 0.5px solid rgba(198,166,100,0.18);
+  border-radius: 3px;
+  padding: 10px 14px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+.modal-field input:focus,
+.modal-field textarea:focus {
+  border-color: rgba(198,166,100,0.45);
+}
+.modal-field input::placeholder,
+.modal-field textarea::placeholder { color: #4a3e2c; }
+
+.modal-submit {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 24px;
+  background: var(--cream);
+  color: var(--bg);
+  border: none;
+  border-radius: 3px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  letter-spacing: 0.04em;
+}
+.modal-submit:hover { opacity: 0.88; }
+.modal-submit:disabled { opacity: 0.45; cursor: default; }
+
+.modal-success {
+  display: none;
+  padding: 16px 0 8px;
+}
+.modal-success-icon { font-size: 28px; margin-bottom: 12px; }
+.modal-success-text {
+  font-size: clamp(15px, 2.2vw, 18px);
+  color: var(--muted);
+  line-height: 1.7;
+}
+.modal-success-text em { color: var(--gold); font-style: italic; }
+
+.modal-error {
+  display: none;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #b06040;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .modal { padding: 40px 24px 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-inner">
+    <span class="eyebrow fade-in" style="display:block; margin-bottom:28px;">Natural Remedy Reference</span>
+
+    <img
+      src="viridia-wordmark.svg"
+      alt="Viridia"
+      class="hero-wordmark fade-in d1"
+      onerror="this.style.display='none'; document.querySelector('.hero-wordmark-text').style.display='block';"
+    >
+    <div class="hero-wordmark-text fade-in d1">Viridia</div>
+
+    <div class="hero-orn fade-in d2">
+      <div class="hero-orn-l"><span></span></div>
+      <div class="hero-orn-g">✦</div>
+      <div class="hero-orn-r"><span></span></div>
+    </div>
+
+    <p class="hero-tagline fade-in d2">Back to the garden.</p>
+
+    <p class="hero-sub fade-in d3">Herbs, nutrients, minerals, compounds, and modalities — researched, cited, and flagged where it matters. The remedy library your body already knows how to use.</p>
+
+    <div class="badge-row fade-in d4">
+      <div class="badge-btn badge-btn--muted" aria-label="Coming soon to the App Store">
+        <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <div class="badge-text">
+          <span class="badge-get">Submitted · In Review</span>
+          <span class="badge-store">App Store</span>
+        </div>
+      </div>
+
+      <button class="badge-btn" onclick="document.getElementById('betaModal').classList.add('open')" aria-label="Apply for Android beta">
+        <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.18 23.76c.3.16.64.2.98.1L14.76 12 3.18.14c-.34-.1-.68-.06-.98.1A1.5 1.5 0 0 0 1.5 1.5v21c0 .57.32 1.1.82 1.38zM17.12 9.06 5.46 2.36l8.57 8.57 3.09-1.87zM5.46 21.64l11.66-6.7-3.09-1.87-8.57 8.57zM20.24 10.47l-2.38-1.37-3.38 2.9 3.38 2.9 2.38-1.37c.75-.43.75-1.63 0-2.06z"/>
+        </svg>
+        <div class="badge-text">
+          <span class="badge-get">Apply for Beta ·</span>
+          <span class="badge-store">Android</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="hero-arrow fade-in d5">↓</div>
+  </div>
+</section>
+
+
+<!-- ══ SCREENSHOTS ══ -->
+<section id="screenshots">
+
+  <div class="screenshots-header fade-in">
+    <span class="eyebrow">The App</span>
+    <div class="orn-row" style="width:clamp(200px,50vw,480px); margin: 14px auto 20px;">
+      <div class="orn-l"></div><span class="orn-g">✦</span><div class="orn-r"></div>
+    </div>
+    <div class="screenshots-heading">Find it. Read it.<br>Save it. Track it.</div>
+    <p class="screenshots-sub">The full loop — from symptom to remedy to your personal record of what worked.</p>
+  </div>
+
+  <!--
+    Horizontal scroll gallery. Swipe on mobile; scroll on desktop.
+    Replace these src values with your actual screenshot filenames.
+    All 5 screenshots are included; the middle one is elevated.
+    Keep them in the /images/ subfolder or in the same dir as index.html.
+  -->
+  <div class="screen-scroll-track" aria-label="App screenshots">
+    <div class="screen-strip">
+      <div class="screen-item fade-in">
+        <img src="App-Store-Screenshot-1.png" alt="Viridia app screen 1" loading="eager">
+      </div>
+      <div class="screen-item fade-in d1">
+        <img src="App-Store-Screenshot-2.png" alt="Viridia app screen 2" loading="eager">
+      </div>
+      <div class="screen-item screen-item--hero fade-in d2">
+        <img src="App-Store-Screenshot-3.png" alt="Viridia app screen 3" loading="eager">
+      </div>
+      <div class="screen-item fade-in d3">
+        <img src="App-Store-Screenshot-4.png" alt="Viridia app screen 4" loading="eager">
+      </div>
+      <div class="screen-item fade-in d4">
+        <img src="App-Store-Screenshot-5.png" alt="Viridia app screen 5" loading="eager">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ══ BOTANICAL BANNER — X banner repurposed as divider ══ -->
+<div class="botanical-banner" role="presentation" aria-hidden="true">
+  <img src="X_Banner.png" alt="">
+</div>
+
+
+<!-- ══ PITCH ══ -->
+<section id="pitch">
+  <div class="inner">
+
+    <div class="pitch-header fade-in">
+      <span class="eyebrow">What Viridia is</span>
+      <div class="orn-row" style="width:clamp(200px,50vw,480px); margin: 16px auto 0;">
+        <div class="orn-l"></div><span class="orn-g">✦</span><div class="orn-r"></div>
+      </div>
+    </div>
+
+    <div class="pitch-columns">
+      <div class="pitch-col fade-in">
+        <span class="pitch-col-label">What it is</span>
+        <div class="pitch-rule"></div>
+        <div class="pitch-heading">Not a wellness app. A reference.</div>
+        <p class="pitch-body">Herbs, nutrients, minerals, compounds, and modalities — if it has <em>demonstrable historical efficacy</em>, it's in here. Every remedy comes with preparation method, cautions, body system, and citations. Two warning flags: one for general caution, one specifically for <em>estrogenic activity</em>. Clarity, not curation.</p>
+      </div>
+
+      <div class="pitch-col fade-in d1">
+        <span class="pitch-col-label">What it isn't</span>
+        <div class="pitch-rule"></div>
+        <div class="pitch-heading">No vague claims. No affiliate supplements.</div>
+        <p class="pitch-body">No <em>"this herb changed my life"</em> without telling you the mechanism. No sponsored products. No empowerment language where plain information would do. No infinite scroll. Just honest information about what a remedy actually does — and a clear warning when you need one.</p>
+      </div>
+    </div>
+
+    <div class="pitch-footer fade-in">
+      Healing is not mystical. It is orderly.<br>
+      <em>Viridia is built from that conviction.</em>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ FEATURES ══ -->
+<section id="features">
+  <div class="inner">
+
+    <div class="features-header fade-in">
+      <span class="eyebrow">What's inside</span>
+      <div class="features-heading">180+ remedies. Every one cited.</div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-item fade-in">
+        <div class="feature-header">
+          <span class="feature-glyph">✦</span>
+          <span class="feature-title">Body Oracle</span>
+        </div>
+        <p class="feature-desc">Search by symptom or body system. Viridia surfaces what applies — without guessing.</p>
+      </div>
+      
+      <div class="feature-item fade-in d1">
+        <div class="feature-header">
+          <span class="feature-glyph">✦</span>
+          <span class="feature-title">Remedy Library</span>
+        </div>
+        <p class="feature-desc">Herbs, nutrients, minerals, modalities. Preparation methods, energetics, historical usage, scientific breakdown.</p>
+      </div>
+
+      <div class="feature-item fade-in d2">
+        <div class="feature-header">
+          <span class="feature-glyph">✦</span>
+          <span class="feature-title">My Cabinet</span>
+        </div>
+        <p class="feature-desc">Save your most-used remedies. Your personal apothecary, offline and always on hand.</p>
+      </div>
+
+      <div class="feature-item fade-in d3">
+        <div class="feature-header">
+          <span class="feature-glyph">✦</span>
+          <span class="feature-title">Healing Journal</span>
+        </div>
+        <p class="feature-desc">Log what you tried and what helped. Build a record that's actually useful.</p>
+      </div>
+
+      <div class="feature-item fade-in d4">
+        <div class="feature-header">
+          <span class="feature-glyph">✦</span>
+          <span class="feature-title">Apothecary Guides</span>
+        </div>
+        <p class="feature-desc">Deep-dive articles on plant science, historical tradition, and the frameworks Viridia is built on.</p>
+      </div>
+
+      <div class="feature-item fade-in d5">
+        <div class="feature-header">
+          <span class="feature-glyph">✦</span>
+          <span class="feature-title">Warning Flags</span>
+        </div>
+        <p class="feature-desc">Red-listed remedies and estrogenic activity flagged plainly — before you use them, not buried in footnotes.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ CONVICTION + FINAL CTA ══ -->
+<section id="conviction">
+  <div class="inner" style="display:flex; flex-direction:column; align-items:stretch; text-align:center;">
+
+    <div class="conviction-headline fade-in">
+      Back to the<br>garden. <span class="conviction-cross"></span>
+    </div>
+
+    <div class="conviction-orn fade-in">
+      <div class="conviction-orn-l"><span></span></div>
+      <div class="conviction-orn-g">✦</div>
+      <div class="conviction-orn-r"><span></span></div>
+    </div>
+
+    <p class="conviction-sub fade-in d1">
+      The remedy library your ancestors didn't need to write down —<br>
+      because they already knew. Now it's in your pocket.
+    </p>
+
+    <div class="badge-row--center fade-in d2">
+      <div class="badge-btn badge-btn--muted" aria-label="Coming soon to the App Store">
+        <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <div class="badge-text">
+          <span class="badge-get">Submitted · In Review</span>
+          <span class="badge-store">App Store</span>
+        </div>
+      </div>
+
+      <button class="badge-btn" onclick="document.getElementById('betaModal').classList.add('open')" aria-label="Apply for Android beta">
+        <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.18 23.76c.3.16.64.2.98.1L14.76 12 3.18.14c-.34-.1-.68-.06-.98.1A1.5 1.5 0 0 0 1.5 1.5v21c0 .57.32 1.1.82 1.38zM17.12 9.06 5.46 2.36l8.57 8.57 3.09-1.87zM5.46 21.64l11.66-6.7-3.09-1.87-8.57 8.57zM20.24 10.47l-2.38-1.37-3.38 2.9 3.38 2.9 2.38-1.37c.75-.43.75-1.63 0-2.06z"/>
+        </svg>
+        <div class="badge-text">
+          <span class="badge-get">Apply for Beta ·</span>
+          <span class="badge-store">Android</span>
+        </div>
+      </button>
+    </div>
+
+    <p class="pricing-note fade-in d3">Free to try ✦ $7.99 / mo or $74.99 / yr (~$6.25 / mo) — first month free</p>
+
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <a class="footer-link" href="https://www.tiktok.com/@momosparlour" target="_blank" rel="noopener">TikTok</a>
+  <span class="footer-sep">✦</span>
+  <a class="footer-link" href="https://x.com/momosparlour" target="_blank" rel="noopener">X / Twitter</a>
+  <span class="footer-sep">✦</span>
+  <a class="footer-link" href="https://www.twitch.tv/momosparlour" target="_blank" rel="noopener">Twitch</a>
+  <span class="footer-sep">✦</span>
+  <a class="footer-link" href="https://viridia-app.github.io/legal/privacy" target="_blank" rel="noopener">Privacy</a>
+  <span class="footer-sep">✦</span>
+  <a class="footer-link" href="https://viridia-app.github.io/legal/terms" target="_blank" rel="noopener">Terms</a>
+  <div class="footer-cross" aria-hidden="true">✝</div>
+</footer>
+
+
+<!-- ══ BETA SIGNUP MODAL ══ -->
+<div class="modal-backdrop" id="betaModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('betaModal').classList.remove('open')" aria-label="Close">×</button>
+
+    <div class="modal-orn">
+      <div class="modal-orn-l"><span></span></div>
+      <div class="modal-orn-g">✦</div>
+      <div class="modal-orn-r"><span></span></div>
+    </div>
+
+    <div class="modal-title" id="modalTitle">Android Beta</div>
+    <p class="modal-sub">Leave your details and we'll send you an invite when a spot opens.</p>
+
+    <div id="betaForm">
+      <div class="modal-field">
+        <label for="betaName">Name</label>
+        <input type="text" id="betaName" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="modal-field">
+        <label for="betaEmail">Email</label>
+        <input type="email" id="betaEmail" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="modal-field">
+        <label for="betaDevice">Android device</label>
+        <input type="text" id="betaDevice" placeholder="e.g. Samsung Galaxy S23, Pixel 8">
+      </div>
+      <div class="modal-field">
+        <label for="betaReason">Why do you want to try Viridia?</label>
+        <textarea id="betaReason" rows="3" placeholder="A sentence or two is fine."></textarea>
+      </div>
+      <button class="modal-submit" id="betaSubmit" onclick="submitBeta()">Apply for Beta</button>
+      <p class="modal-error" id="betaError"></p>
+    </div>
+
+    <div class="modal-success" id="betaSuccess">
+      <div class="modal-success-icon">✦</div>
+      <p class="modal-success-text">You're on the list.<br><em>We'll be in touch.</em></p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+const SUPABASE_URL = 'https://wxxdurdxzmpatlmbyyrp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4eGR1cmR4em1wYXRsbWJ5eXJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyNjc5NDIsImV4cCI6MjA3MDg0Mzk0Mn0.nR-5tG6SDt2dWEPdwhkMIvNqVH2d5jebu9iO_n_srZ0';
+
+async function submitBeta() {
+  const name   = document.getElementById('betaName').value.trim();
+  const email  = document.getElementById('betaEmail').value.trim();
+  const device = document.getElementById('betaDevice').value.trim();
+  const reason = document.getElementById('betaReason').value.trim();
+  const errEl  = document.getElementById('betaError');
+  const btn    = document.getElementById('betaSubmit');
+
+  errEl.style.display = 'none';
+
+  if (!name) { showErr('Please enter your name.'); return; }
+  if (!email || !email.includes('@')) { showErr('Please enter a valid email.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/beta_applications`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ name, email, device: device || null, reason: reason || null })
+    });
+
+    if (res.status === 409) { showErr('That email is already on the list.'); btn.disabled = false; btn.textContent = 'Apply for Beta'; return; }
+    if (!res.ok) throw new Error(res.status);
+
+    document.getElementById('betaForm').style.display = 'none';
+    document.getElementById('betaSuccess').style.display = 'block';
+  } catch(e) {
+    showErr('Something went wrong. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Apply for Beta';
+  }
+}
+
+function showErr(msg) {
+  const el = document.getElementById('betaError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// Close on backdrop click
+document.getElementById('betaModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('open');
+});
+
+// Close on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('betaModal').classList.remove('open');
+});
+
+// Fade-in on scroll via IntersectionObserver
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+// Drag-to-scroll on the screenshot strip (desktop UX)
+const track = document.querySelector('.screen-scroll-track');
+let isDown = false, startX, scrollLeft;
+track.addEventListener('mousedown', e => {
+  isDown = true;
+  track.style.cursor = 'grabbing';
+  startX = e.pageX - track.offsetLeft;
+  scrollLeft = track.scrollLeft;
+});
+track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = ''; });
+track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = ''; });
+track.addEventListener('mousemove', e => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - track.offsetLeft;
+  track.scrollLeft = scrollLeft - (x - startX) * 1.2;
+});
+</script>
+
+</body>
+</html>
