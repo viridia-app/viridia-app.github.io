@@ -781,9 +781,74 @@ footer {
   font-style: italic;
 }
 
+/* ── Launch countdown ── */
+.launch-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.countdown-label {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(9px, 1.4vw, 11px);
+  letter-spacing: 0.28em;
+  color: #8a7a62;
+  text-transform: uppercase;
+}
+
+.countdown-units {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.countdown-number {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.countdown-unit-label {
+  font-family: 'Cormorant Unicase', Georgia, serif;
+  font-size: clamp(8px, 1.2vw, 10px);
+  letter-spacing: 0.22em;
+  color: #5a4e3c;
+  text-transform: uppercase;
+}
+
+.countdown-sep {
+  font-size: clamp(20px, 4vw, 32px);
+  color: var(--gold-dim);
+  line-height: 1;
+  padding-bottom: 6px;
+}
+
+.countdown-done {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(14px, 2.2vw, 18px);
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
 @media (max-width: 480px) {
   .modal { padding: 40px 24px 32px; }
 }
+
+
 </style>
 </head>
 <body>
@@ -811,16 +876,36 @@ footer {
 
     <p class="hero-sub fade-in d3">Herbs, nutrients, minerals, compounds, and modalities — researched, cited, and flagged where it matters. The remedy library your body already knows how to use.</p>
 
+    <div class="launch-countdown fade-in d4" id="countdown">
+      <span class="countdown-label">iOS Launch</span>
+      <div class="countdown-units">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-days">--</span>
+          <span class="countdown-unit-label">Days</span>
+        </div>
+        <span class="countdown-sep">·</span>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-hours">--</span>
+          <span class="countdown-unit-label">Hours</span>
+        </div>
+        <span class="countdown-sep">·</span>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-mins">--</span>
+          <span class="countdown-unit-label">Minutes</span>
+        </div>
+      </div>
+    </div>
+
     <div class="badge-row fade-in d4">
-      <div class="badge-btn badge-btn--muted" aria-label="Coming soon to the App Store">
+      <a class="badge-btn" href="https://apps.apple.com/app/viridia-natural-remedies/id6760572549" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
         <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
         </svg>
         <div class="badge-text">
-          <span class="badge-get">Submitted · In Review</span>
+          <span class="badge-get">Download on the</span>
           <span class="badge-store">App Store</span>
         </div>
-      </div>
+      </a>
 
       <button class="badge-btn" onclick="document.getElementById('betaModal').classList.add('open')" aria-label="Apply for Android beta">
         <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1004,15 +1089,15 @@ footer {
     </p>
 
     <div class="badge-row--center fade-in d2">
-      <div class="badge-btn badge-btn--muted" aria-label="Coming soon to the App Store">
+      <a class="badge-btn" href="https://apps.apple.com/app/viridia-natural-remedies/id6760572549" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
         <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
         </svg>
         <div class="badge-text">
-          <span class="badge-get">Submitted · In Review</span>
+          <span class="badge-get">Download on the</span>
           <span class="badge-store">App Store</span>
         </div>
-      </div>
+      </a>
 
       <button class="badge-btn" onclick="document.getElementById('betaModal').classList.add('open')" aria-label="Apply for Android beta">
         <svg class="badge-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1044,8 +1129,6 @@ footer {
   <a class="footer-link" href="https://viridia-app.github.io/legal/viridia-terms-eula.html" target="_blank" rel="noopener">Terms of Use (EULA)</a>
   <span class="footer-sep">✦</span>
   <a class="footer-link" href="https://viridia-app.github.io/legal/viridia-support.html" target="_blank" rel="noopener">Contact Support</a>
-  <span class="footer-sep">✦</span>
-  <a class="footer-link" href="https://viridia-app.github.io/legal/viridia-support.html" target="_blank" rel="noopener">Delete Account</a>
   <div class="footer-cross" aria-hidden="true">✝</div>
 </footer>
 
@@ -1182,6 +1265,33 @@ track.addEventListener('mousemove', e => {
   const x = e.pageX - track.offsetLeft;
   track.scrollLeft = scrollLeft - (x - startX) * 1.2;
 });
+
+// Launch countdown to June 2nd
+(function() {
+  const launch = new Date('2026-06-02T00:00:00-05:00'); // CT midnight
+
+  function tick() {
+    const now = new Date();
+    const diff = launch - now;
+
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML =
+        '<span class="countdown-done">Now available on the App Store ✦</span>';
+      return;
+    }
+
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+
+    document.getElementById('cd-days').textContent  = String(days).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0');
+  }
+
+  tick();
+  setInterval(tick, 10000); // update every 10s — no need to hammer every second
+})();
 </script>
 
 </body>
